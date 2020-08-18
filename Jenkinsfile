@@ -36,6 +36,17 @@ pipeline {
               }
             }
         }
+        stage('Clean Container') {
+            agent any
+            steps {
+              script {
+                sh '''
+                docker stop ${IMAGE_NAME}
+                docker rm ${IMAGE_NAME}
+                  '''
+              }
+            }
+        }
         stage('Push image in staging and deploy it') {
             when {
                      expression { GIT_BRANCH == 'origin/master' }
