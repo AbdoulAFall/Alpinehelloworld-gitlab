@@ -53,12 +53,11 @@ pipeline {
                  }
             agent any
             environment {
-              HEROKY_API_KEY = credentials('heroku_api_key')
+              HEROKU_API_KEY = credentials('heroku_api_key')
             }
             steps {
               script {
                 sh '''
-                  export $HEROKY_API_KEY
                   heroku container:login
                   heroku create $STAGING || echo "project already exist"
                   heroku container:push -a ${STAGING} web
@@ -73,12 +72,11 @@ pipeline {
                  }
             agent any
             environment {
-              HEROKY_API_KEY = credentials('heroku_api_key')
+              HEROKU_API_KEY = credentials('heroku_api_key')
             }
             steps {
               script {
                 sh '''
-                  export $HEROKY_API_KEY
                   heroku container:login
                   heroku create $STAGING || echo "project already exist"
                   heroku container:push -a ${PRODUCTION} web
