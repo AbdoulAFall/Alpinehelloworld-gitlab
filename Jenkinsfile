@@ -7,6 +7,12 @@ pipeline {
      }
      agent none
      stages {
+         stage('Check Dockerfile syntax') {
+            agent { docker { image 'hadolint/hadolint' } }
+            steps {
+             script { dockerfileCheck }
+            }
+        }
          stage('Build image') {
              agent any
              steps {
