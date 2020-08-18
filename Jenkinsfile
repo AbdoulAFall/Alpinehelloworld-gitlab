@@ -11,7 +11,7 @@ pipeline {
             agent any
             steps {
               script {
-                sh 'docker build -t eazytraining/${IMAGE_NAME}:${IMAGE_TAG} .'
+                sh 'docker build -t eazytraining/$IMAGE_NAME:$IMAGE_TAG .'
               }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
               script {
                 sh '''
-                  docker run --name $IMAGE_NAME -d -p 80:5000 -e PORT=5000 eazytraining/${IMAGE_NAME}:${IMAGE_TAG}
+                  docker run --name $IMAGE_NAME -d -p 80:5000 -e PORT=5000 eazytraining/$IMAGE_NAME:$IMAGE_TAG
                   sleep 5
                 '''
               }
@@ -41,8 +41,8 @@ pipeline {
             steps {
               script {
                 sh '''
-                docker stop ${IMAGE_NAME}
-                docker rm ${IMAGE_NAME}
+                docker stop $IMAGE_NAME
+                docker rm $IMAGE_NAME
                   '''
               }
             }
@@ -60,8 +60,8 @@ pipeline {
                 sh '''
                   heroku container:login
                   heroku create $STAGING || echo "project already exist"
-                  heroku container:push -a ${STAGING} web
-                  heroku container:release -a ${STAGING} web
+                  heroku container:push -a $STAGING web
+                  heroku container:release -a $STAGING web
                 '''
               }
             }
@@ -78,9 +78,9 @@ pipeline {
               script {
                 sh '''
                   heroku container:login
-                  heroku create $STAGING || echo "project already exist"
-                  heroku container:push -a ${PRODUCTION} web
-                  heroku container:release -a ${PRODUCTION} web
+                  heroku create $PRODUCTION || echo "project already exist"
+                  heroku container:push -a $PRODUCTION web
+                  heroku container:release -a $PRODUCTION web
                 '''
               }
             }
