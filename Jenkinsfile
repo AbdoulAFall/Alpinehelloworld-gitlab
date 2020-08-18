@@ -47,6 +47,7 @@ pipeline {
             steps {
               script {
                 sh '''
+                  export $HEROKY_API_KEY
                   heroku container:login
                   heroku create $STAGING || echo "project already exist"
                   heroku container:push -a ${STAGING} web
@@ -66,6 +67,7 @@ pipeline {
             steps {
               script {
                 sh '''
+                  export $HEROKY_API_KEY
                   heroku container:login
                   heroku create $STAGING || echo "project already exist"
                   heroku container:push -a ${PRODUCTION} web
