@@ -1,10 +1,12 @@
-def IMAGE_NAME = "alpinehelloworld"
-def IMAGE_TAG = "latest"
-def STAGING = "eazytraining-staging"
-def PRODUCTION = "eazytraining-production"
 pipeline {
     agent none
     stages {
+        environment {
+          def IMAGE_NAME = "alpinehelloworld"
+          def IMAGE_TAG = "latest"
+          def STAGING = "eazytraining-staging"
+          def PRODUCTION = "eazytraining-production"
+        }
         stage('Build image') {
             agent any
             steps {
