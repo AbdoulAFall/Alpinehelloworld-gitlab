@@ -4,4 +4,4 @@ docker-build:
   services:
     - docker:dind
   script:
-    - docker build -t .
+    - docker build -t alpinehelloworld .
