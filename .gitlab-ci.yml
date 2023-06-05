@@ -23,4 +23,5 @@ test acceptation:
     - docker load < alpinehelloworld.tar
     - docker run -d -p 80:80 -e PORT=80 --name webapp alpinehelloworld
     - sleep 5
+    - apk --no-cache install curl 
     - curl "http://localhost" | gep -q "Hello world!"
