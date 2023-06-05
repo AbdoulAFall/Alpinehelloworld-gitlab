@@ -9,7 +9,7 @@ build:
     - docker:dind
   script:
     - docker build -t alpinehelloworld .
-    - docker save alpihehelloworld > alpihehelloworld.tar
+    - docker save alpinehelloworld > alpinehelloworld.tar
   artifacts: 
     paths: 
       - alpihehelloworld.tar
