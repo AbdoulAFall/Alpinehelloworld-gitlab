@@ -12,7 +12,7 @@ build:
     - docker save alpinehelloworld > alpinehelloworld.tar
   artifacts: 
     paths: 
-      - alpihehelloworld.tar
+      - alpinehelloworld.tar
 
 test acceptation: 
   image: docker:latest  
@@ -20,5 +20,7 @@ test acceptation:
   services: 
     - docker:dind
   script: 
-    - docker load < alpihehelloworld.tar
-    - docker run -d --name webapp alpinehelloworld
+    - docker load < alpinehelloworld.tar
+    - docker run -d -p 80:80 -e PORT=80 --name webapp alpinehelloworld
+    - sleep 5
+    - curl "http://localhost" | gep -q "Hello world!"
