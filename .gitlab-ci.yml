@@ -21,7 +21,7 @@ test acceptation:
     - docker:dind
   script: 
     - docker load < alpinehelloworld.tar
-    - docker run -d -p 80:5000 -env PORT=5000 --name webapp alpinehelloworld
+    - docker run -d -p 80:5000 --env PORT=5000 --name webapp alpinehelloworld
     - sleep 5
     - apk --no-cache add curl 
     - curl "http://localhost" | gep -q "Hello world!"
