@@ -1,12 +1,14 @@
+image: docker:latest
+services: 
+  - name: docker:dind
+    alias: docker
+
 stages: 
   - Build image
   - Test acceptation
   
 build:
-  image: docker:latest
   stage: Build image
-  services:
-    - docker:dind
   script:
     - docker build -t alpinehelloworld .
     - docker save alpinehelloworld > alpinehelloworld.tar
@@ -15,14 +17,11 @@ build:
       - alpinehelloworld.tar
 
 test acceptation: 
-  image: docker:latest  
   stage: Test acceptation
-  services: 
-    - docker:dind
   script: 
     - docker load < alpinehelloworld.tar
     - sleep 5
     - docker run -d -p 80:5000 --env PORT=5000 --name webapp alpinehelloworld
     - sleep 5
     - apk --no-cache add curl 
-    - curl "http://docker" | gep -q "Hello world!"
+    - curl "http://docker" | grep -q "Hello world!"
