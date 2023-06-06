@@ -24,4 +24,4 @@ test acceptation:
     - docker run -d -p 80:5000 --env PORT=5000 --name webapp alpinehelloworld
     - sleep 5
     - apk --no-cache add curl 
-    - curl "http://localhost" | gep -q "Hello world!"
+    - curl "http://docker" | gep -q "Hello world!"
