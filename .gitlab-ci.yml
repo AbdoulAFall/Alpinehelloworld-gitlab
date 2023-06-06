@@ -20,7 +20,6 @@ test acceptation:
   stage: Test acceptation
   script: 
     - docker load < alpinehelloworld.tar
-    - sleep 5
     - docker run -d -p 80:5000 --env PORT=5000 --name webapp alpinehelloworld
     - sleep 5
     - apk --no-cache add curl 
