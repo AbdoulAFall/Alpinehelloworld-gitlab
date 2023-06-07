@@ -43,31 +43,31 @@ deploy staging:
   stage: Deploy staging
   environment: 
     name: staging
-    url: https://eazytraining-staging.herokuapp.com
+    url: https://eazytrainingfall-staging.herokuapp.com
   only:
     - master
   script: 
     - apk --no-cache add npm 
     - npm install -g heroku 
     - heroku container:login 
-    - heroku create eazytraining-staging || echo "project already exist"
-    - heroku container:push -a eazytraining-staging web 
-    - heroku container:release -a eazytraining-staging web 
+    - heroku create eazytrainingfall-staging || echo "project already exist"
+    - heroku container:push -a eazytrainingfall-staging web 
+    - heroku container:release -a eazytrainingfall-staging web 
 
 
 deploy prod:
   stage: Deploy prod
   environment: 
     name: prod
-    url: https://eazytraining-prod.herokuapp.com
+    url: https://eazytrainingfall-prod.herokuapp.com
   only:
     - master
   script: 
     - apk --no-cache add npm 
     - npm install -g heroku 
     - heroku container:login 
-    - heroku create eazytraining-prod || echo "project already exist"
-    - heroku container:push -a eazytraining-prod web 
-    - heroku container:release -a eazytraining-prod web 
+    - heroku create eazytrainingfall-prod || echo "project already exist"
+    - heroku container:push -a eazytrainingfall-prod web 
+    - heroku container:release -a eazytrainingfall-prod web 
 
 
