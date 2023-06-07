@@ -6,6 +6,7 @@ services:
 stages: 
   - Build image
   - Test acceptation
+  - Release image
   
 build:
   stage: Build image
@@ -24,3 +25,13 @@ test acceptation:
     - sleep 5
     - apk --no-cache add curl 
     - curl "http://docker" | grep -q "Hello world!"
+
+release image: 
+  stage: Release image
+  scripts: 
+    - docker load < alpinehelloworld.tar
+    - docker tag alpinehelloworld "${IMAGE_NAME}:${CI_COMMIT_REF_NAME}"
+    - docker tag alpinehelloworld "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker push "${IMAGE_NAME}:${CI_COMMIT_REF_NAME}"
+    - docker push "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
