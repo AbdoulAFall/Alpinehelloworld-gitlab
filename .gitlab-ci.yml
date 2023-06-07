@@ -7,6 +7,8 @@ stages:
   - Build image
   - Test acceptation
   - Release image
+  - Deploy staging
+  - Deploy prod
   
 build:
   stage: Build image
@@ -35,3 +37,37 @@ release image:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker push "${IMAGE_NAME}:${CI_COMMIT_REF_NAME}"
     - docker push "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
+
+
+deploy staging:
+  stage: Deploy staging
+  environment: 
+    name: staging
+    url: https://eazytraining-staging.herokuapp.com
+  only:
+    - master
+  script: 
+    - apk --no-cache add npm 
+    - nupm install -g heroku 
+    - heroku container:login 
+    - heroku create eazytraining-staging
+    - heroku container:push -a eazytraining-staging web 
+    - heroku container:release -a eazytraining-staging web 
+
+
+deploy prod:
+  stage: Deploy prod
+  environment: 
+    name: prod
+    url: https://eazytraining-prod.herokuapp.com
+  only:
+    - master
+  script: 
+    - apk --no-cache add npm 
+    - nupm install -g heroku 
+    - heroku container:login 
+    - heroku create eazytraining-prod
+    - heroku container:push -a eazytraining-prod web 
+    - heroku container:release -a eazytraining-prod web 
+
+
