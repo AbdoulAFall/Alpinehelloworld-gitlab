@@ -7,6 +7,7 @@ stages:
   - Build image
   - Test acceptation
   - Release image
+  - Deploy review
   - Deploy staging
   - Deploy prod
   
@@ -71,3 +72,17 @@ deploy prod:
     - heroku container:release -a eazytrainingfall-prod web 
 
 
+deploy review:
+  stage: Deploy review
+  environment: 
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://eazytrainingfall-$CI_COMMIT_REF_NAME.herokuapp.com
+  only:
+    - master
+  script: 
+    - apk --no-cache add npm 
+    - npm install -g heroku 
+    - heroku container:login 
+    - heroku create eazytrainingfall-$CI_COMMIT_REF_NAME || echo "project already exist"
+    - heroku container:push -a eazytrainingfall-CI_COMMIT_REF_NAME web 
+    - heroku container:release -a eazytrainingfall-CI_COMMIT_REF_NAME web 
